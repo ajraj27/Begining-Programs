@@ -9,21 +9,18 @@ struct linked_list
 
 typedef struct linked_list node;
 node* head;
-int flag=0;
+
 
 void Insert(int x)
 {
 	node* temp=(node*)malloc(sizeof(node));	
+	temp->data=x;
+	temp->next=NULL;
 	
 
-	
-
-	if(flag==0)
+	if(head==NULL)
 	{
-		temp->data=x;
-		temp->next=head;
 		head=temp;
-		flag=1;
 		return ;
 	}
 	
@@ -35,8 +32,6 @@ void Insert(int x)
 	}
 		
 	temp1->next=temp;
-	temp->data=x;
-	temp->next=NULL;
 		
 	
 }
