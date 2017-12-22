@@ -29,6 +29,22 @@ bool stackempty()
 	return false;
 }
 
+bool openingParanthesis(char c)
+{
+	if(c=='(' || c=='{' || c=='[')
+		return true;
+
+	return false;
+}
+
+bool closingParanthesis(char c)
+{
+	if(c==')' || c=='}' || c==']')
+		return true;
+
+	return false;
+}
+
 int getOpWeight(char op)
 {
 	int weight=-1;
@@ -88,7 +104,7 @@ void infixToPostfix(char a[])
 
 		else if(isoperator(a[i]))
 		{
-			while(!stackempty() && higherprecedance(Top(),a[i]))
+			while(!stackempty() && higherprecedance(Top(),a[i]) && !openingParanthesis(Top()))
 			{
 				b[++k]=Top();
 				Pop();
@@ -96,6 +112,20 @@ void infixToPostfix(char a[])
 			}
 
 			Push(a[i]);
+		}
+
+		else if(openingParanthesis(a[i]))
+			Push(a[i]);
+
+		else if(closingParanthesis(a[i]))
+		{
+			while(!stackempty() && !openingParanthesis(Top()))
+			{
+				b[++k]=Top();
+				Pop();
+			}
+
+			Pop();
 		}
 
 		else
