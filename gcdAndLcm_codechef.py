@@ -7,20 +7,20 @@ def hcf(a,b):
 		if(b==0):
 			return a
 		else:
-			return gcd(b,a%b)
+			return hcf(b,a%b)
 
 	else:
 	
 		if(a==0):
 			return b
 		else:
-			return gcd(a,b%a)				
+			return hcf(a,b%a)				
 
 while(t!=0):
 	a,b=map(int,input().split())
 
 	gcd=hcf(a,b)
-	lcm=(a*b)/gcd
+	lcm=(a*b)//gcd
 	print(gcd,lcm)
 
 	t=t-1			
