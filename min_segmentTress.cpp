@@ -1,79 +1,43 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void build(int node,int start,int end,int tree[],int arr[]){
-
-	if(start==end){
-		tree[node]=arr[start];
-		return;
-	}
-
-	int mid= (start+end)/2;
-	build(2*node,start,mid,tree,arr);
-	build(2*node+1,mid+1,end,tree,arr);
-	tree[node]=min(tree[2*node],tree[2*node+1]);
-}
-
-void update(int node,int start,int end,int idx,int val,int tree[],int arr[]){
-
-	if(start==end){
-		arr[idx]=val;
-		tree[node]=val;
-		return;
-	}
-
-	int mid=(start+end)/2;
-
-	if(start<=idx && idx<=mid)
-		update(2*node,start,mid,idx,val,tree,arr);
-	else
-		update(2*node+1,mid+1,end,idx,val,tree,arr);
-
-	tree[node]=min(tree[2*node],tree[2*node+1]);
-}
-
-int query(int node,int start,int end,int l,int r,int tree[],int arr[]){
-
-	if(end < l || r < start){
-		return INT_MAX;
-	}
-
-	if(l<=start && end<=r){
-		return tree[node];
-	}
-
-	int mid=(start+end)/2;
-	int p1=query(2*node,start,mid,l,r,tree,arr);
-	int p2=query(2*node+1,mid+1,end,l,r,tree,arr);
-	return min(p1,p2);
-}
-
 int main(){
-	int n,q,a,b;
-	char c;
-	cin >> n >> q;
+	int n,k;
+	cin >> n >> k;
 
-	int arr[n];
+	int a[n+1],b[n+1];
 
-	for(int i=0;i<n;i++)
-		cin >> arr[i];
+	for(int i=1;i<=n;i++)
+		cin >> a[i];
 
-	int tree[4*n+1];
+	sort(a,a+n+1);
 
-	build(1,0,n-1,tree,arr);
+	int c=1;
+	bool flag=true;
+	b[1]=1;
 
-	for(int i=0;i<q;i++){
-		cin >> c >> a >> b;
-
-		if(c=='q'){
-			int ans=query(1,0,n-1,a-1,b-1,tree,arr);
-			cout << ans <<endl;
+	for(int i=2;i<=n;i++){
+		if(a[i]==a[i-1]){
+			if(c<=k)
+				b[i]=c++;
+			else{
+				flag=false;
+				break;
+			}
 		}
 
 		else
-			update(1,0,n-1,a-1,b,tree,arr);
+			b[i]=c;
+
 
 	}
 
-	
+	if(flag){
+		cout << "YES" << endl;
+		for(int i=1;i<=n;i++)
+			cout << b[i] << " " ;
+	}
+
+	else
+		cout << "NO";
 }
