@@ -25,7 +25,7 @@ int minDistance(int distance[],bool set[],int v)
 	return minIndex;
 }
 
-void dijsktra(int v,int matrix[][v+1],int src)
+void dijsktra(int v,int matrix[][v+1],int src,int alldist[][v+1])
 {
 	int distance[v+1];
 	bool set[v+1];
@@ -52,15 +52,16 @@ void dijsktra(int v,int matrix[][v+1],int src)
 	}
 
 	for(int i=1;i<=v;i++)
-		printf("%d ",distance[i]);
+		alldist[src][i]=dist[i];
 }
 
 int main()
 {
-	int v,e,start,end,val;
+	int v,e,start,end,val,t,a,b;
 	scanf("%d%d",&v,&e);
 
 	int matrix[v+1][v+1];
+	int alldist[v+1][v+1];
 
 	for(int i=1;i<=v;i++)
 	{
@@ -74,8 +75,14 @@ int main()
 		addMatrix(v,matrix,start,end,val);
 	}
 
-	int src;
-	scanf("%d",&src);
+	for(int i=1;i<=v;i++)
+		dijsktra(v,matrix,i,alldist);
 
-	dijsktra(v,matrix,src);
+	scanf("%d",&t);
+
+	while(t--){
+		scanf("%d%d",&a,&b);
+		printf("%d\n",alldist[a][b]);
+	}
+
 }
