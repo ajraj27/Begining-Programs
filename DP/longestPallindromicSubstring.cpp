@@ -8,6 +8,7 @@ int longestPallindromicSubstring(string A){
 
 	int dp[n][n];
 	int res=1;
+	int start=0,end=n-1;
 
 	for(int i=0;i<n;i++)
 		dp[i][i]=1;
@@ -16,12 +17,18 @@ int longestPallindromicSubstring(string A){
 		for(int i=0,j=gap;j<n;i++,j++){
 			dp[i][j]= A[i]==A[j] && ((i+1)<=(j-1)?dp[i+1][j-1]:1);
 
-			if(A[i]==A[j] && dp[i+1][j-1])
-				res=max(res,gap+1);
+			if(A[i]==A[j] && dp[i+1][j-1]){
+				if(gap+1>res){
+					res=gap+1;
+					start=i;
+					end=j;
+				}
+
+			}
 		}
 	}
 
-	return res;
+	return A.substr(start,end-start+1);
 }
 
 int main(){
