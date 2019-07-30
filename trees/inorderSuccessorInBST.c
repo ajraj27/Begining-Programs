@@ -42,8 +42,6 @@ node* search(node* root,int x)
 
 void getSuccessor(node* root,int x)
 {
-
-
 	node* current=search(root,x);
 
 	if(current==NULL)
@@ -93,5 +91,4 @@ int main()
 
 
 	getSuccessor(root,number);
-
 }

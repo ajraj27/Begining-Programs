@@ -1,40 +1,44 @@
-#include<bits/stdc++.h>
+#include<bits.stdc++.h>
 using namespace std;
 
-int pallindromePartitioning(string A){
-	int n=A.length();
-	if(n==0)
-		return 0;
+void nextPermutation(vector<int>& A){
+	int n=A.size();
+	int idx=-1,idx2;
 
-	int dp[n][n];
-	int pal[n][n];
-
-	for(int i=0;i<n;i++){
-		dp[i][i]=1;
-		pal[i][i]=1;
-	}
-
-	for(int gap=1;gap<n;gap++){
-		for(int i=0,j=gap;j<n;i++,j++){
-			pal[i][j]=A[i]==A[j] && (i+1)<=(j-1)?pal[i+1][j-1]:1;
-
-			if(pal[i][j])
-				dp[i][j]=0;
-
-			else{
-				dp[i][j]=INT_MAX;
-				for(int k=i;k<j;k++)
-					dp[i][j]=min(dp[i][j],dp[i][k]+dp[k+1][j]+1);
-			}
+	for(int i=n-2;i>=0;i--){
+		if(A[i]<A[i+1]){
+			idx=i;
+			break;
 		}
 	}
 
-	return dp[0][n-1];
+	if(idx==-1){
+		sort(A.begin(),A.end());
+		return;
+	}
+
+	for(int i=idx;i<n;i++){
+		if(A[i]>A[idx])
+			idx2=i;
+	}
+
+	swap(A[idx],A[idx2]);
+
+	sort(A.begin()+idx+1,A.end());
 }
 
 int main(){
-	string A;
-	cin >> A;
+	int n;
+	cin >> n;
 
-	cout << pallindromePartitioning(A);
+	vector<int> v(n,0);
+
+	for(int i=0;i<n;i++)
+		cin >> v[i];
+
+	nextPermutation(v);
+
+	for(int i=0;i<v.size();i++)
+		cin >> v[i] << " ";
+
 }

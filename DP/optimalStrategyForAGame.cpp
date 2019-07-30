@@ -1,8 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
-
 int getMaxPoints(vector<int> A){
 	int n=A.size();
 	if(n==0)
