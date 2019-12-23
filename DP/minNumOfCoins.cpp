@@ -1,30 +1,32 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int getNumOfCoins(int a[],int n,int m){
-	int dp[n+1];
-	dp[0]=0;
-
-	for(int i=1;i<=n;i++)
-		dp[i]=INT_MAX;
-
-	for(int i=1;i<n+1;i++){
-		for(int j=0;j<m;j++)
-			if(a[j]<=i)
-				dp[i]=min(dp[i],1+dp[i-a[j]]);
-	}
-
-	return dp[n];
-}
-
 int main(){
-	int n,m;
-	cin >> n >> m;
+	int t;
+	cin >> t;
 
-	int a[m];
+	while(t--){
+		int n,k;
+		cin >> n >> k;
+		string s;
+		cin >> s;
+		int ctr=0;
+		vector<int> v;
+		s.append('0');
 
-	for(int i=0;i<m;i++)
-		cin >> a[i];
+		for(int i=0;i<n;i++){
+			if(s[i]=='1'){
+				ctr++;
+				continue;
+			}
 
-	cout << getNumOfCoins(a,n,m);
+			v.push_back(ctr);
+			ctr=0;
+			tmp=i;
+		}
+
+		while(k>0){
+
+		}
+	}
 }
