@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define anuj ios_base::sync_with_stdio(false),cin.tie(NULL);
+#define anuj ios_base::sync_with_stdio(false);cin.tie(NULL)
 #define fo(i,n) for(int i=0;i<n;i++)
 #define Fo(i,k,n) for(int i=k;i<n;i++)
 #define ll long long
@@ -14,6 +14,7 @@ using namespace std;
 #define clr(x) memset(x, 0, sizeof(x))
 #define tr(it, a) for(auto it = a.begin(); it != a.end(); it++)
 #define PI 3.1415926535897932384626
+#define endl '\n'
 typedef pair<int, int>	pii;
 typedef pair<ll, ll>	pll;
 typedef vector<int>		vi;
@@ -86,7 +87,8 @@ int dis(int u,int v){
 }
 
 int main(){
-	anuj
+	anuj;
+
 	int n,m,u,v;
 	cin >> n >> m;
 
@@ -101,10 +103,10 @@ int main(){
 
 	dfs(1,0);
 
-	Fo(i,1,n+1) 
-		Fo(j,1,LG)
-			if(P[i][j-1]!=-1)
-				P[i][j]=P[P[i][j-1]][j-1];
+	Fo(i,1,LG) 
+		Fo(j,1,n+1)
+			if(P[j][i-1]!=-1)
+				P[j][i]=P[P[j][i-1]][i-1];
 
 	cin >> u >> v;
 	cout << getAncestor(u,v);		
