@@ -1,3 +1,4 @@
+//Tree Queries - Codeforces 629
 #include <bits/stdc++.h>
 using namespace std;
 #define anuj ios_base::sync_with_stdio(false);cin.tie(NULL)
@@ -24,44 +25,29 @@ typedef vector<pll>		vpll;
 typedef vector<vi>		vvi;
 typedef vector<vll>		vvll;
 const int mod = 1000000007;
-const int N = 2e5;
+const int N = 2e5+5;
 const int LG = 20;
+int a[N];
+int tin[N],tout[N],timer,dep[N],par[N];
+vi g[N];
 
-typedef struct data{
-	data* child[26];
-	int cnt;
-}trie;
+void dfs(int u,int p,int d=0){
+	tin[u]=timer++;
+	dep[u]=d;
+	par[u]=p;
 
-string a[N];
-int n,k;
-trie* root;
-int ans;
-
-void insert(string &s){
-	trie* curr=root;
-	fo(i,s.length()){
-		char ch=s[i];
-		int reqd=ch-'A';
-		if(!curr->child[reqd]) curr->child[reqd]=new trie();
-		curr=curr->child[reqd];
+	for(int v:g[u]){
+		if(v==p) continue;
+		dfs(v,u,d+1);
 	}
 
-	curr->cnt++;
+	tout[u]=timer++;
 }
 
-void dfs(trie* curr,int lvl){
-
-	fo(i,26){
-		if(curr->child[i]){
-			dfs(curr->child[i],lvl+1);
-			curr->cnt+=curr->child[i]->cnt;
-		}
-	}
-
-	while(curr->cnt>=k){
-		curr->cnt-=k;
-		ans+=lvl;
-	}
+// is u is a ancestor of v
+bool isAncestor(int u,int v){
+	if(tin[u]<=tin[v] && tout[v]<=tout[u]) return true;
+	return false;
 }
 
 int main(){
@@ -71,21 +57,38 @@ int main(){
     freopen("outputf.in", "w", stdout);
 	#endif
 
-	int t;
-	cin >> t;
+	int n,q;
+	cin >> n >> q;
 
-	for(int z=1;z<=t;z++){
-		cin >> n >> k;
-		root= new trie();
-		ans=0;
-		fo(i,n){
-			cin >> a[i];
-			insert(a[i]);
+	fo(i,n-1){
+		int u,v;
+		cin >> u >> v;
+		g[u].pb(v);
+		g[v].pb(u);
+	}
+
+	dfs(1,0);
+
+
+	while(q--){
+		int k;
+		cin >> k;
+		vi v(k);
+		fo(i,k) cin >> v[i];
+
+		int u=v[0];
+		Fo(i,1,k) if(dep[v[i]]>dep[u]) u=v[i];
+
+		fo(i,k){
+			if(par[v[i]]==0) continue;
+			v[i]=par[v[i]];
 		}
 
-		dfs(root,0);
+		bool ok=true;
 
-		cout << "Case #" << z << ": " << ans << endl;
+		fo(i,k) ok&=isAncestor(v[i],u);
+		if(ok) cout << "YES" << endl;
+		else cout << "NO"  << endl;
 
 
 	}
