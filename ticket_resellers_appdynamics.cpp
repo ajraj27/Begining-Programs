@@ -25,40 +25,43 @@ typedef vector<vi>		vvi;
 const int mod = 1000000007;
 const int N = 2e5+5;
 const int LG = 20;
-int a[N],b[N];
+int a[N];
 
 int32_t main(){
 	anuj;
-	// #ifndef ONLINE_JUDGE
- //    freopen("inputf.txt", "r", stdin);
- //    freopen("outputf.txt", "w", stdout);
-	// #endif
+	#ifndef ONLINE_JUDGE
+    freopen("inputf.txt", "r", stdin);
+    freopen("outputf.txt", "w", stdout);
+	#endif
 
-	int n;
-	cin >> n;
+	int n,k;
+	cin >> n >> k;
 
 	fo(i,n) cin >> a[i];
-	fo(i,n) cin >> b[i];
+	sort(a,a+n);
 
-	int ans=INT_MAX;
-	for(int i=1;i<n-1;i++){
-		int mn=INT_MAX;
-		int c=a[i];
-		for(int j=0;j<i;j++){
-			if(a[j]<a[i]) mn=min(mn,a[j]);
-		}
-		c+=mn;
-		mn=INT_MAX;
-		for(int j=i+1;j<n;j++){
-			if(a[j]>a[i]) mn=min(mn,a[j]);
-		}
+	map<int,int> m;
 
-		c+=mn;
-		ans=min(ans,c);
+	fo(i,n) m[a[i]]++;
 
+	int cnt=0;
+	int val=a[n-1];
+	int res=0;
+	while(cnt<k){
+		int mul=m[val];
+		res+=mul*val;
+		cnt+=mul;
 
-
+		val--;
+		m[val]+=mul;
 	}
 
-	cout << ans;
+	val++;
+
+	while(cnt>k){
+		cnt--;
+		res-=val;
+	}
+
+	cout << res ;
 }

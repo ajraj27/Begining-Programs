@@ -25,40 +25,47 @@ typedef vector<vi>		vvi;
 const int mod = 1000000007;
 const int N = 2e5+5;
 const int LG = 20;
-int a[N],b[N];
+int a[N];
+
+int solve(string s){
+	int res=s.length();
+	int l=0,r=0,n=s.length();
+
+	int a[n];
+
+	for(int i=1;i<n;i++){
+		if(i>r){
+			l=r=i;
+			while(r<n && s[r-l]==s[r]) r++;
+			a[i]=r-l,r--;
+			res+=a[i];
+		} else{
+			int k=i-l;
+			if(a[k]<r-i+1){
+				a[i]=a[k];
+				res+=a[i];
+			} else{
+				l=i;
+				while(r<n && s[r-l]==s[r])r++;
+				a[i]=r-l;
+				res+=a[i];
+				r--;
+			}
+		}
+	}
+
+	return res;
+}
 
 int32_t main(){
 	anuj;
-	// #ifndef ONLINE_JUDGE
- //    freopen("inputf.txt", "r", stdin);
- //    freopen("outputf.txt", "w", stdout);
-	// #endif
+	#ifndef ONLINE_JUDGE
+    freopen("inputf.txt", "r", stdin);
+    freopen("outputf.txt", "w", stdout);
+	#endif
 
-	int n;
-	cin >> n;
+	string s;
+	cin >> s;
 
-	fo(i,n) cin >> a[i];
-	fo(i,n) cin >> b[i];
-
-	int ans=INT_MAX;
-	for(int i=1;i<n-1;i++){
-		int mn=INT_MAX;
-		int c=a[i];
-		for(int j=0;j<i;j++){
-			if(a[j]<a[i]) mn=min(mn,a[j]);
-		}
-		c+=mn;
-		mn=INT_MAX;
-		for(int j=i+1;j<n;j++){
-			if(a[j]>a[i]) mn=min(mn,a[j]);
-		}
-
-		c+=mn;
-		ans=min(ans,c);
-
-
-
-	}
-
-	cout << ans;
+	cout << solve(s);
 }

@@ -25,40 +25,40 @@ typedef vector<vi>		vvi;
 const int mod = 1000000007;
 const int N = 2e5+5;
 const int LG = 20;
-int a[N],b[N];
+int a[N];
 
 int32_t main(){
 	anuj;
-	// #ifndef ONLINE_JUDGE
- //    freopen("inputf.txt", "r", stdin);
- //    freopen("outputf.txt", "w", stdout);
-	// #endif
+	#ifndef ONLINE_JUDGE
+    freopen("inputf.txt", "r", stdin);
+    freopen("outputf.txt", "w", stdout);
+	#endif
 
 	int n;
 	cin >> n;
 
 	fo(i,n) cin >> a[i];
-	fo(i,n) cin >> b[i];
 
-	int ans=INT_MAX;
-	for(int i=1;i<n-1;i++){
-		int mn=INT_MAX;
-		int c=a[i];
-		for(int j=0;j<i;j++){
-			if(a[j]<a[i]) mn=min(mn,a[j]);
+	int interval[n];
+	fo(i,n){
+		int l=max(i+1-a[i],(int)1);
+		int r=min(n,i+1+a[i]);
+
+		interval[l-1]=r;
+	}
+
+	int step=interval[0],mx=interval[0],jmp=1;
+
+	for(int i=1;i<n;i++){
+		mx=max(mx,interval[i]);
+
+		if(i==step){
+			jmp++;
+			step=mx;
 		}
-		c+=mn;
-		mn=INT_MAX;
-		for(int j=i+1;j<n;j++){
-			if(a[j]>a[i]) mn=min(mn,a[j]);
-		}
-
-		c+=mn;
-		ans=min(ans,c);
-
-
+		
 
 	}
 
-	cout << ans;
+	cout << jmp;
 }

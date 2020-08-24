@@ -25,40 +25,35 @@ typedef vector<vi>		vvi;
 const int mod = 1000000007;
 const int N = 2e5+5;
 const int LG = 20;
-int a[N],b[N];
+int a[N];
+
 
 int32_t main(){
 	anuj;
-	// #ifndef ONLINE_JUDGE
- //    freopen("inputf.txt", "r", stdin);
- //    freopen("outputf.txt", "w", stdout);
-	// #endif
+	#ifndef ONLINE_JUDGE
+    freopen("inputf.txt", "r", stdin);
+    freopen("outputf.txt", "w", stdout);
+	#endif
 
-	int n;
-	cin >> n;
+   string s;
+   cin >> s;
 
-	fo(i,n) cin >> a[i];
-	fo(i,n) cin >> b[i];
+   vector<string > res;
+   int n=s.length();
+   for(int i=0;i<n;i++){
+   		int j=i+1;
+   		while(j<n && s[j]==s[i]) j++;
+   		res.push_back(s.substr(i,j-i));
+   		i=j-1;
+   }
 
-	int ans=INT_MAX;
-	for(int i=1;i<n-1;i++){
-		int mn=INT_MAX;
-		int c=a[i];
-		for(int j=0;j<i;j++){
-			if(a[j]<a[i]) mn=min(mn,a[j]);
-		}
-		c+=mn;
-		mn=INT_MAX;
-		for(int j=i+1;j<n;j++){
-			if(a[j]>a[i]) mn=min(mn,a[j]);
-		}
+   int w=0,b=0;
 
-		c+=mn;
-		ans=min(ans,c);
+   for(string& str:res){
+   		int l=str.length();
+   		if(l>2 && str[0]=='w') w+=l-2;
+   		if(l>2 && str[0]=='b') b+=l-2;
+   }
 
-
-
-	}
-
-	cout << ans;
+   cout << (w>b?"wendy":"bob");
 }
